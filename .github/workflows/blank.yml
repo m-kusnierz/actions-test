@@ -19,7 +19,7 @@ jobs:
   build:
     services:
       mongo:
-        image: mongodb
+        image: mongo
         options: >-
           --add-host=host.docker.internal:host-gateway
         ports:
