@@ -26,8 +26,8 @@ jobs:
           - 27017:27017
       mongo-express:
         image: mongo-express
-        options: >-
-          --add-host=host.docker.internal:host-gateway
+#         options: >-
+#           --add-host=host.docker.internal:host-gateway
         env: 
           ME_CONFIG_MONGODB_SERVER: host.docker.internal
 
