@@ -42,7 +42,7 @@ jobs:
       - run: echo "docker-test 127.0.0.1" > host.aliases
       - run: export HOSTALIASES=$(pwd)/host.aliases
       - run: sudo apt-get update && sudo apt-get install -y curl ncat
-      - run: while true; do { echo -e 'HTTP/1.1 200 OK\r\n';  } | nc -l 4444; done &
+      - run: while true; do { echo -e 'HTTP/1.1 200 OK\n\n';  } | nc -l 4444; done &
       - run: curl -v http://localhost:4444
       - run: curl -v http://docker-test:4444
 
