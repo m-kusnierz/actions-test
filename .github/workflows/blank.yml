@@ -47,7 +47,8 @@ jobs:
       - run: cat /etc/hosts
       - run: curl -v http://localhost:4444
       - run: curl -v http://host.docker.internal:4444
-
+  
+      - run: date
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Add other actions to build && sleep 15
