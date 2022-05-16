@@ -12,7 +12,6 @@ on:
     inputs:
       branch:
         description: 'Branch to deploy from'
-        default: 'master'
         required: true 
         type: string
 jobs:
