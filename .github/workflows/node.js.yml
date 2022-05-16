@@ -17,6 +17,4 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.inputs.branch }}
     - run: echo $GITHUB_REF_NAME
