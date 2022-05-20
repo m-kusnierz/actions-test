@@ -1,7 +1,10 @@
 name: Test branch unshallow
 
 on:
-  push:
+  pull_request:
+    branches:
+      - master
+      - main
 
 jobs:
 
