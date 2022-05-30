@@ -21,7 +21,7 @@ jobs:
           workflow: test-package.yml
           commit: ${{ github.event.pull_request.head.sha }}
           workflow_conclusion: success
-
+      - run: mv ${{ github.event.commits[0].id }}/package-lock.json ./package-lock.json
       # - uses: actions/download-artifact@v3
       #   with:
       #     path: 'package-lock.json'
