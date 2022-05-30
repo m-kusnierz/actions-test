@@ -16,10 +16,16 @@ jobs:
         env:
           JSON: ${{ toJSON(github) }}
       - run: echo ${{ github.event.commits[0].id }}
-      - uses: actions/download-artifact@v3
+      - uses: dawidd6/action-download-artifact@v2
         with:
-          path: 'package-lock.json'
-          name: ${{ github.event.commits[0].id }}
+          workflow: test-package.yml
+          commit: ${{ github.event.pull_request.head.sha }}
+          workflow_conclusion: success
+
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     path: 'package-lock.json'
+      #     name: ${{ github.event.commits[0].id }}
       - run: git status
       - run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
 
