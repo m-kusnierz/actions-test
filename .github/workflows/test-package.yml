@@ -22,7 +22,7 @@ jobs:
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
       run: git stash -u
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
-      uses: ./.github/workflows/update-package-lock.yml
+      uses: './.github/workflows/update-package-lock.yml'
 
     #   uses: actions/checkout@v3
     #   with:
