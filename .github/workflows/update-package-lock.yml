@@ -6,9 +6,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          # fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       - run: env
       - uses: actions/download-artifact@v3
         with:
           path: 'package-lock.json'
           name: package_lock
       - run: git status
+
+      - run: git add package-lock.json
+      - run: git commit -m "update pkg lock"
+      - run: git push origin HEAD:$GITHUB_HEAD_REF
