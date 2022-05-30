@@ -15,11 +15,11 @@ jobs:
       - run: echo $JSON
         env:
           JSON: ${{ toJSON(github) }}
-      - run: echo ${{ github.event.push.before }}
+      - run: echo ${{ github.event.commits[0].id }}
       - uses: actions/download-artifact@v3
         with:
           path: 'package-lock.json'
-          name: ${{ github.event.push.before }}
+          name: ${{ github.event.commits[0].id }}
       - run: git status
       - run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
 
