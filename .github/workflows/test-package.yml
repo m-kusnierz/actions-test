@@ -22,16 +22,18 @@ jobs:
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
       run: git stash -u
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
-      uses: actions/checkout@v3
-      with:
-        # fetch-depth: 0
-        ref: ${{ github.event.pull_request.head.sha }}
+      uses: ./.github/workflows/update-package-lock.yml
 
-    - if: ${{ steps.package-lock-status.outputs.package-changed }}
-      run: git stash pop
-    - if: ${{ steps.package-lock-status.outputs.package-changed }}
-      run: git add package-lock.json
-    - if: ${{ steps.package-lock-status.outputs.package-changed }}
-      run: git commit -m "update pkg lock"
-    - if: ${{ steps.package-lock-status.outputs.package-changed }}
-      run: git push origin HEAD:$GITHUB_HEAD_REF
+    #   uses: actions/checkout@v3
+    #   with:
+    #     # fetch-depth: 0
+    #     ref: ${{ github.event.pull_request.head.sha }}
+
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git stash pop
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git add package-lock.json
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git commit -m "update pkg lock"
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git push origin HEAD:$GITHUB_HEAD_REF
