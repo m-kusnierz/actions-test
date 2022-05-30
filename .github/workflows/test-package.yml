@@ -22,7 +22,7 @@ jobs:
       run: echo "::set-output name=package-changed::$(git status | grep package-lock.json | wc -l)" 
 
     - uses: actions/upload-artifact@v3
-    - if: ${{ steps.package-lock-status.outputs.package-changed }}
+      if: ${{ steps.package-lock-status.outputs.package-changed }}
       with:
         path: 'package-lock.json'
         name: package_lock
