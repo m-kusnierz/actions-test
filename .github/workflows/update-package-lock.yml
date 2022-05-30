@@ -1,0 +1,25 @@
+on:
+  push:
+    branches: [ main ]
+
+
+jobs:
+  update-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        # with:
+          # fetch-depth: 0
+          # ref: ${{ github.event.pull_request.head.sha }}
+      - run: env
+      - run: echo ${{ github.event.push.before }}
+      - uses: actions/download-artifact@v3
+        with:
+          path: 'package-lock.json'
+          name: ${{ github.event.push.before }}
+      - run: git status
+      - run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
+
+      - run: git add package-lock.json
+      - run: git commit -m "update pkg lock"
+      - run: git push origin HEAD:$GITHUB_HEAD_REF

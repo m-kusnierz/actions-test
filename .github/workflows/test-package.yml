@@ -1,0 +1,52 @@
+
+name: test dispatch
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    outputs:
+      package-changed: ${{ steps.package-lock-status.outputs.package-changed }}
+    steps:
+    - uses: actions/checkout@v3
+    - run: env
+    - run: npm i
+    - run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
+    - run: git status
+    - id: package-lock-status
+      run: echo "::set-output name=package-changed::$(git status | grep package-lock.json | wc -l)" 
+    - run: echo ${{ github.event.pull_request.head.sha }}
+    - uses: actions/upload-artifact@v3
+      if: ${{ steps.package-lock-status.outputs.package-changed }}
+      with:
+        path: 'package-lock.json'
+        name: ${{ github.event.pull_request.head.sha }}
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git stash -u
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   uses: './.github/workflows/update-package-lock.yml'
+
+    #   uses: actions/checkout@v3
+    #   with:
+    #     # fetch-depth: 0
+    #     ref: ${{ github.event.pull_request.head.sha }}
+
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git stash pop
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git add package-lock.json
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git commit -m "update pkg lock"
+    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
+    #   run: git push origin HEAD:$GITHUB_HEAD_REF
+  
+  # update-package:
+  #   uses: ./.github/workflows/update-package-lock.yml
+  #   if: ${{ needs.build.outputs.package-changed }}
+  #   # runs-on: ubuntu-latest
+  #   needs: build
