@@ -1,0 +1,22 @@
+
+name: test dispatch
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - run: env
+    # - run: npm i
+    # - run: |
+    #   var=$(git status | grep package-lock.json | wc -l) && \
+    #   [ ! -z $var ] && git add package-lock.json && \
+    #   git commit -m "update pkg lock" && \
+    #   git push origin $GITHUB_HEAD_REF || git status
