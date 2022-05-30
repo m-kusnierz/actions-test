@@ -20,12 +20,15 @@ jobs:
     - id: package-lock-status
       run: echo "::set-output name=package-changed::$(git status | grep package-lock.json | wc -l)" 
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
+      run: git stash
+    - if: ${{ steps.package-lock-status.outputs.package-changed }}
       uses: actions/checkout@v3
       with:
         ref: ${{ env.GITHUB_HEAD_REF }}
 
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
       run: |
+        git stash apply
         git add package-lock.json && 
         git commit -m "update pkg lock" && 
         git push origin $GITHUB_HEAD_REF
