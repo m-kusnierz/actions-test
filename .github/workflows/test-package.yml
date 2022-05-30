@@ -16,7 +16,7 @@ jobs:
     - run: env
     - run: npm i
     - run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
-        
+    - run: git status
     - id: package-lock-status
       run: echo "::set-output name=package-changed::$(git status | grep package-lock.json | wc -l)" 
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
