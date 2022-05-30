@@ -17,32 +17,28 @@ jobs:
     - run: npm i
     - id: package-lock-status
       run: echo "::set-output name=package-changed::$(git status | grep package-lock.json | wc -l)" 
-    - run: echo ${{ github.event.pull_request.head.sha }}
-    # - uses: actions/upload-artifact@v3
-    #   if: ${{ steps.package-lock-status.outputs.package-changed }}
-    #   with:
-    #     path: 'package-lock.json'
-    #     name: ${{ github.event.pull_request.head.sha }}
 
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
 
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: git add package-lock.json
+    # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+    #   run: git add package-lock.json
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1'}}
       run: git stash -u
 
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       uses: actions/checkout@v3
       with:
-        # fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
 
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git stash pop
+
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git add package-lock.json
+
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git commit -m "update pkg lock"
+
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git push origin HEAD:$GITHUB_HEAD_REF
