@@ -14,9 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: env
-    # - run: npm i
-    # - run: |
-    #   var=$(git status | grep package-lock.json | wc -l) && \
-    #   [ ! -z $var ] && git add package-lock.json && \
-    #   git commit -m "update pkg lock" && \
-    #   git push origin $GITHUB_HEAD_REF || git status
+    - run: npm i
+    - run: |
+      var=$(git status | grep package-lock.json | wc -l) && \
+      [ ! -z $var ] && git add package-lock.json && \
+      git commit -m "update pkg lock" && \
+      git push || git status
