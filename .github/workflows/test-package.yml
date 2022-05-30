@@ -25,6 +25,9 @@ jobs:
     #     name: ${{ github.event.pull_request.head.sha }}
 
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+      run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
+
+    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git add package-lock.json
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1'}}
       run: git stash -u
