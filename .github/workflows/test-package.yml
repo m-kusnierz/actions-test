@@ -34,4 +34,4 @@ jobs:
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
       run: git commit -m "update pkg lock"
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
-      run: git push origin $GITHUB_HEAD_REF
+      run: git push #origin $GITHUB_HEAD_REF
