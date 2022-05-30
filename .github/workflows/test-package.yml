@@ -27,8 +27,10 @@ jobs:
         ref: ${{ env.GITHUB_HEAD_REF }}
 
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
-      run: |
-        git stash pop
-        git add package-lock.json && 
-        git commit -m "update pkg lock" && 
-        git push origin $GITHUB_HEAD_REF
+      run: git stash pop
+    - if: ${{ steps.package-lock-status.outputs.package-changed }}
+      run: git add package-lock.json && 
+    - if: ${{ steps.package-lock-status.outputs.package-changed }}
+      run: git commit -m "update pkg lock" && 
+    - if: ${{ steps.package-lock-status.outputs.package-changed }}
+      run: git push origin $GITHUB_HEAD_REF
