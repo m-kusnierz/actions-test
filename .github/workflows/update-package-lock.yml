@@ -15,6 +15,7 @@ jobs:
           path: 'package-lock.json'
           name: package_lock
       - run: git status
+      - run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
 
       - run: git add package-lock.json
       - run: git commit -m "update pkg lock"
