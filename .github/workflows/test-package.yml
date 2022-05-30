@@ -16,7 +16,7 @@ jobs:
     - run: env
     - run: npm i
     - run: |
-      var=$(git status | grep package-lock.json | wc -l) && 
-      [ ! -z $var ] && git add package-lock.json && 
-      git commit -m "update pkg lock" && 
-      git push || git status
+        var=$(git status | grep package-lock.json | wc -l) && 
+        [ ! -z $var ] && git add package-lock.json && 
+        git commit -m "update pkg lock" && 
+        git push || git status
