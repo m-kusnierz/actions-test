@@ -41,6 +41,8 @@ jobs:
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git stash pop
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+      run: git add package-lock.json
+    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git commit -m "update pkg lock"
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git push origin HEAD:$GITHUB_HEAD_REF
