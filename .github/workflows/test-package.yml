@@ -19,16 +19,16 @@ jobs:
     - run: git status
     - id: package-lock-status
       run: echo "::set-output name=package-changed::$(git status | grep package-lock.json | wc -l)" 
-    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
-    #   run: git stash -a
+    - if: ${{ steps.package-lock-status.outputs.package-changed }}
+      run: git stash -u
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
         ref: ${{ env.GITHUB_HEAD_REF }}
 
-    # - if: ${{ steps.package-lock-status.outputs.package-changed }}
-    #   run: git stash pop
+    - if: ${{ steps.package-lock-status.outputs.package-changed }}
+      run: git stash pop
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
       run: git add package-lock.json
     - if: ${{ steps.package-lock-status.outputs.package-changed }}
