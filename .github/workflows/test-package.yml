@@ -24,6 +24,8 @@ jobs:
     #     path: 'package-lock.json'
     #     name: ${{ github.event.pull_request.head.sha }}
 
+    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+      run: git add package-lock.json
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1'}}
       run: git stash -u
 
@@ -35,8 +37,6 @@ jobs:
 
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git stash pop
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: git add package-lock.json
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git commit -m "update pkg lock"
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
