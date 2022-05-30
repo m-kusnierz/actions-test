@@ -5,5 +5,10 @@ jobs:
   update-package:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - run: env
+      - uses: actions/download-artifact@v3
+        with:
+          path: 'package-lock.json'
+          name: package_lock
       - run: git status
