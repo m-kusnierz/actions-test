@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-  
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -47,4 +47,4 @@ jobs:
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git push origin HEAD:$GITHUB_HEAD_REF
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: gh workflow run -r $GITHUB_HEAD_REF
+      run: gh workflow run test -r $GITHUB_HEAD_REF
