@@ -7,27 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        # with:
-          # fetch-depth: 0
-          # ref: ${{ github.event.pull_request.head.sha }}
-      - run: env
-      - run: echo $JSON
-        env:
-          JSON: ${{ toJSON(github) }}
-      - run: echo ${{ github.event.commits[0].id }}
-      - uses: dawidd6/action-download-artifact@v2
+    
+      - name: Get artifact id
+        run: echo ${{ github.event.commits[0].id }}
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
         with:
           workflow: test-package.yml
-          commit: ${{ github.event.pull_request.head.sha }}
+          commit: ${{ github.event.commits[0].id }}
           workflow_conclusion: success
       - run: mv ${{ github.event.commits[0].id }}/package-lock.json ./package-lock.json
-      # - uses: actions/download-artifact@v3
-      #   with:
-      #     path: 'package-lock.json'
-      #     name: ${{ github.event.commits[0].id }}
       - run: git status
       - run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
 
       - run: git add package-lock.json
-      - run: git commit -m "update pkg lock"
-      - run: git push #origin HEAD:$GITHUB_HEAD_REF
+      - run: git commit -m "Updated package-lock.json"
+      - run: git push
