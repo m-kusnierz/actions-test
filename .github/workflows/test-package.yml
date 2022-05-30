@@ -47,6 +47,6 @@ jobs:
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
       run: git push origin HEAD:$GITHUB_HEAD_REF
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: gh workflow run 'test package' -R m-kusnierz/actions-test -r $GITHUB_HEAD_REF
+      run: gh workflow run 'test package' -R m-kusnierz/actions-test -r $GITHUB_HEAD_REF && sleep 5
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
