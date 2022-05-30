@@ -21,4 +21,4 @@ jobs:
         var=$(git status | grep package-lock.json | wc -l) && 
         [ ! -z $var ] && git add package-lock.json && 
         git commit -m "update pkg lock" && 
-        git push || git status
+        git push origin HEAD:$GITHUB_HEAD_REF || git status
