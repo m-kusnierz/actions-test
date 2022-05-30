@@ -18,35 +18,45 @@ jobs:
       package-changed: ${{ steps.package-lock-status.outputs.package-changed }}
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+
     - run: npm i
     - id: package-lock-status
       run: echo "::set-output name=package-changed::$(git status | grep package-lock.json | wc -l)" 
 
     - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
+      uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updated package-lock.json
+          file_pattern: "*.json"
+          disable_globbing: true
+
+    # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+    #   run: git config user.email "ghactions@mku.com" && git config user.name "GH Actions"
+
+    # # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+    # #   run: git add package-lock.json
+    # - if: ${{ steps.package-lock-status.outputs.package-changed == '1'}}
+    #   run: git stash -u
+
+    # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+    #   uses: actions/checkout@v3
+    #   with:
+    #     ref: ${{ github.event.pull_request.head.sha }}
+
+    # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+    #   run: git stash pop
 
     # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
     #   run: git add package-lock.json
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1'}}
-      run: git stash -u
 
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
+    # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+    #   run: git commit -m "update pkg lock"
 
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: git stash pop
-
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: git add package-lock.json
-
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: git commit -m "update pkg lock"
-
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: git push origin HEAD:$GITHUB_HEAD_REF
-    - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
-      run: gh workflow run 'test package' -R m-kusnierz/actions-test -r $GITHUB_HEAD_REF && sleep 10
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+    #   run: git push origin HEAD:$GITHUB_HEAD_REF
+    # - if: ${{ steps.package-lock-status.outputs.package-changed == '1' }}
+    #   run: gh workflow run 'test package' -R m-kusnierz/actions-test -r $GITHUB_HEAD_REF && sleep 10
+    #   env:
+    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
