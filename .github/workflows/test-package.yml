@@ -40,6 +40,6 @@ jobs:
     #   run: git push origin HEAD:$GITHUB_HEAD_REF
   
   update-package:
-    runs-on: ubuntu-latest
-    needs: build
     uses: ./.github/workflows/update-package-lock.yml
+    # runs-on: ubuntu-latest
+    needs: build
